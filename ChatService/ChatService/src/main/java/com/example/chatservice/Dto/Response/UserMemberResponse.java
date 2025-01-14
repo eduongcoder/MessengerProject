@@ -1,10 +1,11 @@
 package com.example.chatservice.Dto.Response;
 
-
+import com.example.chatservice.Entity.Room;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -16,18 +17,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RoomResponse {
-    String idRoom;
-    /*
-    Ý nghĩa của ReceivedUser:
-        ID của người nhận trong các phòng chat 1-1 (chat cá nhân).
-        Trong trường hợp phòng nhóm, trường này có thể để trống hoặc không được sử dụng.
-    */
-    String receivedUser;
-    String roomName;
-    String backGroundRoom;
+public class UserMemberResponse {
+    String userMemberId;
+    String nameUser;
+    String role;
+    String userId;
+    RoomResponse room;
     LocalDateTime createAt;
     LocalDateTime updateAt;
-
-
 }

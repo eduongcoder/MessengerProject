@@ -1,7 +1,5 @@
 package com.example.chatservice.Entity;
 
-
-import com.example.chatservice.Dto.Response.UserResponse;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
@@ -17,26 +15,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Document(collection = "room")
-public class Room {
+@Document(collection = "user_member")
+public class UserMember {
     @Id
-    String idRoom;
-    /*
-    Ý nghĩa của ReceivedUser:
-        ID của người nhận trong các phòng chat 1-1 (chat cá nhân).
-        Trong trường hợp phòng nhóm, trường này có thể để trống hoặc không được sử dụng.
-    */
+    String userMemberId;
+
+    String nameUser;
+    String role;
+    String userId;
+
     @DBRef
-     List<UserMember> userMembers;
+    Room room;
 
     @DBRef
     List<Message> messages;
-    String receivedUser;
-    String roomName;
-    String backGroundRoom;
-
     LocalDateTime createAt;
     LocalDateTime updateAt;
-
-
 }
