@@ -1,8 +1,9 @@
-package com.example.profileservice.service;
+package com.example.profileservice2.service;
 
-import com.example.profileservice.DTO.UserDto;
-import com.example.profileservice.entity.User;
-import com.example.profileservice.repository.UserRepository;
+import com.example.profileservice2.DTO.Request.UserRequest;
+import com.example.profileservice2.DTO.Response.UserReponse;
+import com.example.profileservice2.entity.User;
+import com.example.profileservice2.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -12,13 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
 
     UserRepository userRepository; // Repository để thao tác với dữ liệu
-
+    public UserService(UserRepository userService) {
+        this.userRepository = userService;
+    }
     /**
      * Đăng ký người dùng mới.
      *
@@ -26,7 +29,7 @@ public class UserService {
      * @return User Đối tượng người dùng đã được lưu
      * @throws IllegalArgumentException Nếu username hoặc email đã tồn tại
      */
-    public User registerUser(User userDto) {
+    public User registerUser(UserRequest userDto) {
         // Kiểm tra username hoặc email trùng lặp
         if (userRepository.existsByUsername(userDto.getUsername())) {
             throw new IllegalArgumentException("Username đã tồn tại!");
@@ -49,8 +52,7 @@ public class UserService {
         // Lưu người dùng vào cơ sở dữ liệu
         User savedUser = userRepository.save(newUser);
 
-        log.info("Người dùng {} đã được đăng ký thành công!", newUser.getUsername());
+        //log.info("Người dùng {} đã được đăng ký thành công!", newUser.getUsername());
         return savedUser;
     }
 }
-
