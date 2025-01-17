@@ -1,16 +1,16 @@
 package com.example.profileservice2.controller;
 
 import com.example.profileservice2.DTO.Request.UserRequest;
+import com.example.profileservice2.DTO.Response.UserReponse;
 import com.example.profileservice2.entity.User;
 import com.example.profileservice2.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -30,5 +30,15 @@ public class UserController {
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
+    }
+    @GetMapping ("/{userid}")
+    public UserReponse getProfile (@PathVariable UUID userid){
+        return userService.getUserByUsername(userid);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserRequest request) {
+        String token = authenticationService.authenticate(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 }

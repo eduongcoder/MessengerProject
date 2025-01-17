@@ -11,7 +11,10 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     User toUser(UserRequest userRequest);
-    UserReponse toUserReponse(User User);
+
+    static UserReponse toUserReponse(User User) {
+        return null;
+    }
 
 
 }
