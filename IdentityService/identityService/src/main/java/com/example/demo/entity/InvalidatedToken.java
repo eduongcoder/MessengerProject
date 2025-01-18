@@ -1,30 +1,28 @@
 package com.example.demo.entity;
 
+import java.util.Date;
+
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
+@Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserIdentity {
-
+@Entity
+public class InvalidatedToken {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	String idUser;
-	String idUserProfile;
-	
-	String email;
-	String password;
-	
+	String id;
+	Date expiryTime;
 }

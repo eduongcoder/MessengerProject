@@ -8,6 +8,8 @@ import java.util.StringJoiner;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -59,20 +62,19 @@ public class UserIdentityService {
 			throw new AppException(ErrorCode.USER_IDENTITY_EXISTS);
 		}
 		UserIdentity userIdentity = userMapper.toUserIdentity(request);
-		
+
 		userIdentity.setPassword(passwordEncoder.encode(request.getPassword()));
-		
+
 		userIdentity = userIdentityRepository.save(userIdentity);
-		
 		return userMapper.toUserIdentityRespone(userIdentity);
 	}
 
 	public String generateToken(UserIdentity userIdentity) {
 		JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
-//		userIdentity.getEmail()
-		JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder().subject(userIdentity.getEmail()+" "+userIdentity.getPassword()).issueTime(new Date())
+
+		JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder().subject("Duong").issueTime(new Date())
 				.expirationTime(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
-				.jwtID(UUID.randomUUID().toString()).claim("scope", "ok").build();
+				.jwtID(UUID.randomUUID().toString()).claim("scope","id userProfileNhen" ).build();
 
 		Payload payload = new Payload(jwtClaimsSet.toJSONObject());
 
@@ -86,6 +88,29 @@ public class UserIdentityService {
 		}
 
 	}
+
+	public String decodeToken() {
+		var authentication = SecurityContextHolder.getContext();
+			
+		
+		if (authentication == null) {
+			return "Không tìm thấy Authentication trong SecurityContext";
+		} else
+			return authentication.toString();
+	}
+	
+	public  String getScopeFromToken(String token) {
+        try {
+            SignedJWT signedJWT = SignedJWT.parse(token);
+            
+            JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
+            
+            return claimsSet.getStringClaim("scope");
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.DECODE_TOKEN_ERROR);
+        }
+    }
+
 
 	public LoginRespone getUserIdentity(LoginRequest request) {
 		var userIdentity = userIdentityRepository.findByEmail(request.getEmail())

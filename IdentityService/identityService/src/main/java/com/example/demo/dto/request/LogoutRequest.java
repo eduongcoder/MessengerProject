@@ -1,4 +1,5 @@
-package com.example.demo.dto.respone;
+package com.example.demo.dto.request;
+
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,14 +11,9 @@ import lombok.experimental.FieldDefaults;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level =  AccessLevel.PRIVATE)
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserIdentityRespone {
+public class LogoutRequest {
+	String token;
 
-	String idUser;
-	String idUserProfile;
-
-
-	String email;
-	String password;
 }

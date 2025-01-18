@@ -17,4 +17,6 @@ import lombok.experimental.FieldDefaults;
 public class UserIdentityCreationRequest {
 	String email;
 	String password;
+	String idUserProfile;
+
 }

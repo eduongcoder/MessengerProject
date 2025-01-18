@@ -1,5 +1,6 @@
 package com.example.demo.dto.respone;
 
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +13,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserIdentityRespone {
-
-	String idUser;
-	String idUserProfile;
-
-
-	String email;
-	String password;
+public class IntrospectRespone {
+	boolean Valid;
 }
