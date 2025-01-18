@@ -4,6 +4,7 @@ import com.example.profileservice2.DTO.Request.UserRequest;
 import com.example.profileservice2.DTO.Response.UserReponse;
 import com.example.profileservice2.entity.User;
 import com.example.profileservice2.mapper.UserMapper;
+import com.example.profileservice2.openfeign.AuthServiceClient;
 import com.example.profileservice2.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,12 @@ import java.util.UUID;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
+    private final AuthServiceClient authServiceClient;
 
     UserRepository userRepository; // Repository để thao tác với dữ liệu
-    private final JwtUtil jwtUtil;
-    public UserService(UserRepository userService) {
+    public UserService(UserRepository userService,AuthServiceClient authServiceClient) {
         this.userRepository = userService;
+        this.authServiceClient = authServiceClient;
     }
 
     public User registerUser(UserRequest userDto) {
@@ -54,7 +56,7 @@ public class UserService {
     }
 
     public UserReponse getUserProfile(String token) {
-        UUID userId = jwtUtil.extractUserId(token);
+        String userId = String.valueOf(authServiceClient.ApiRespone(token));
         User user = userRepository.findById((userId))
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return UserMapper.toUserReponse(user);

@@ -31,14 +31,15 @@ public class UserController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    @GetMapping ("/{userid}")
-    public UserReponse getProfile (@PathVariable UUID userid){
-        return userService.getUserByUsername(userid);
+//    @GetMapping ("/{userid}")
+//    public UserReponse getProfile (@PathVariable UUID userid){
+//        return userService.getUserByUsername(userid);
+//    }
+
+    @PostMapping("/getubtoken")
+    public ResponseEntity<?> login( String token) {
+        UserReponse user = userService.getUserProfile(token);
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserRequest request) {
-        String token = authenticationService.authenticate(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(new AuthResponse(token));
-    }
 }

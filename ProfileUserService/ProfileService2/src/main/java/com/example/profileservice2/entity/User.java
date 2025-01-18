@@ -20,7 +20,7 @@ public class User {
 
     @Id
     @GeneratedValue(generatorClass = GeneratedValue.UUIDGenerator.class)
-    UUID id;
+    String id;
 
     String username;
     String email;
@@ -34,7 +34,7 @@ public class User {
     public User() {
     }
 
-    public User(UUID id, String username, String email, String password, String avatar, String phonenumber, Boolean isactive, Date createdAt, Date updatedAt) {
+    public User(String id, String username, String email, String password, String avatar, String phonenumber, Boolean isactive, Date createdAt, Date updatedAt) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -46,11 +46,11 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
