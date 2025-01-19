@@ -1,16 +1,18 @@
 package com.example.profileservice2.service;
 
+import com.example.profileservice2.DTO.Request.UserIdentityCreationRequest;
 import com.example.profileservice2.DTO.Request.UserRequest;
 import com.example.profileservice2.DTO.Response.UserReponse;
 import com.example.profileservice2.entity.User;
 import com.example.profileservice2.mapper.UserMapper;
-import com.example.profileservice2.openfeign.AuthServiceClient;
+import com.example.profileservice2.openfeign.IdentityServiceClient;
 import com.example.profileservice2.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.UUID;
@@ -20,14 +22,14 @@ import java.util.UUID;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
-    private final AuthServiceClient authServiceClient;
+    private final IdentityServiceClient authServiceClient;
 
     UserRepository userRepository; // Repository để thao tác với dữ liệu
-    public UserService(UserRepository userService,AuthServiceClient authServiceClient) {
+    public UserService(UserRepository userService,IdentityServiceClient authServiceClient) {
         this.userRepository = userService;
         this.authServiceClient = authServiceClient;
     }
-
+    @Transactional
     public User registerUser(UserRequest userDto) {
         // Kiểm tra username hoặc email trùng lặp
         if (userRepository.existsByUsername(userDto.getUsername())) {
@@ -48,19 +50,34 @@ public class UserService {
         newUser.setCreatedAt(new Date());
         newUser.setUpdatedAt(new Date());
 
+
         // Lưu người dùng vào cơ sở dữ liệu
         User savedUser = userRepository.save(newUser);
+// Gọi Identity Service để tạo UserIdentity
+        UserIdentityCreationRequest identityRequest = new UserIdentityCreationRequest();
+        identityRequest.setIdUserProfile(savedUser.getId());
+        identityRequest.setEmail(savedUser.getEmail());
+        identityRequest.setPassword(savedUser.getPassword());
+
+        try {
+            String response = authServiceClient.createUserIdentity(identityRequest);
+            System.out.println("Identity Service Response: " + response);
+        } catch (Exception e) {
+            System.err.println("Lỗi khi gọi Identity Service: " + e.getMessage());
+            return null;
+        }
 
         //log.info("Người dùng {} đã được đăng ký thành công!", newUser.getUsername());
         return savedUser;
     }
 
     public UserReponse getUserProfile(String token) {
-    	log.info("Tokennn:"+token);
+    	//log.info("Tokennn:"+token);
         String userId = authServiceClient.decodeToken(token);
         User user = userRepository.findById((userId))
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return UserMapper.toUserReponse(user);
     }
+
 
 }

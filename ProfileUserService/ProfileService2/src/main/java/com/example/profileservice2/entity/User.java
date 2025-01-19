@@ -19,7 +19,6 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(generatorClass = GeneratedValue.UUIDGenerator.class)
     String id;
 
     String username;
@@ -32,10 +31,12 @@ public class User {
     Date updatedAt;
 
     public User() {
+        this.id = UUID.randomUUID().toString(); // Tạo UUID dạng String khi tạo object
+
     }
 
     public User(String id, String username, String email, String password, String avatar, String phonenumber, Boolean isactive, Date createdAt, Date updatedAt) {
-        this.id = id;
+        this.id = UUID.randomUUID().toString(); // Tạo UUID dạng String khi tạo object
         this.username = username;
         this.email = email;
         this.password = password;
