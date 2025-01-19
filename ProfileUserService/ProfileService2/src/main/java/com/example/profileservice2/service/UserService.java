@@ -56,7 +56,8 @@ public class UserService {
     }
 
     public UserReponse getUserProfile(String token) {
-        String userId = String.valueOf(authServiceClient.ApiRespone(token));
+    	log.info("Tokennn:"+token);
+        String userId = authServiceClient.decodeToken(token);
         User user = userRepository.findById((userId))
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return UserMapper.toUserReponse(user);

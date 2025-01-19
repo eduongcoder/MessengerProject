@@ -19,13 +19,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecureConfig {
 	 
-//	private final String[] PUBLIC_ENDPOINTS = { "/useridentity/token" };
+	private final String[] PUBLIC_ENDPOINTS = { "/useridentity/token","/useridentity/login" ,"/useridentity/decodeToken"};
 
 	@Autowired
 	private CustomJwtDecoder customJwtDecoder;
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, "/useridentity/token").permitAll()
+		http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+				.requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS).permitAll()
 				.anyRequest().authenticated());
 
 		http.oauth2ResourceServer(oauth2 ->

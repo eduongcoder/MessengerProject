@@ -37,7 +37,7 @@ public class UserController {
 //    }
 
     @PostMapping("/getubtoken")
-    public ResponseEntity<?> login( String token) {
+    public ResponseEntity<?> login(@RequestParam String token) {
         UserReponse user = userService.getUserProfile(token);
         return ResponseEntity.ok(user);
     }

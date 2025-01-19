@@ -19,11 +19,13 @@ import com.example.demo.dto.request.LoginRequest;
 import com.example.demo.dto.request.UserIdentityCreationRequest;
 import com.example.demo.dto.respone.LoginRespone;
 import com.example.demo.dto.respone.UserIdentityRespone;
+import com.example.demo.dto.respone.UserReponse;
 import com.example.demo.entity.UserIdentity;
 import com.example.demo.exception.AppException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserIdentityRepository;
+import com.example.demo.repository.http.ProfileUser;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSObject;
@@ -57,6 +59,8 @@ public class UserIdentityService {
 
 	PasswordEncoder passwordEncoder;
 
+	ProfileUser profileUser;
+	
 	public UserIdentityRespone createUserIdentity(UserIdentityCreationRequest request) {
 		if (userIdentityRepository.existsByEmail(request.getEmail())) {
 			throw new AppException(ErrorCode.USER_IDENTITY_EXISTS);
@@ -107,7 +111,8 @@ public class UserIdentityService {
             
             return claimsSet.getStringClaim("scope");
         } catch (Exception e) {
-            throw new AppException(ErrorCode.DECODE_TOKEN_ERROR);
+        	log.info(e.toString());
+           return "";
         }
     }
 
@@ -128,6 +133,11 @@ public class UserIdentityService {
 		return LoginRespone.builder().token(token).authenticated(isMatches).build();
 
 	}
+	
+	public UserReponse login(String token) {
+		return profileUser.login(token);
+	}
+	
 
 //	private String buildScope(UserIdentity userIdentity) {
 //		StringJoiner stringJoiner=new StringJoiner(" ");
