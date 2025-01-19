@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecureConfig {
 	 
-	private final String[] PUBLIC_ENDPOINTS = { "/useridentity/token","/useridentity/login" ,"/useridentity/decodeToken"};
+	private final String[] PUBLIC_ENDPOINTS = { "/useridentity/token","/useridentity/login" ,"/useridentity/decodeToken","/useridentity/createUserIdentity"};
 
 	@Autowired
 	private CustomJwtDecoder customJwtDecoder;

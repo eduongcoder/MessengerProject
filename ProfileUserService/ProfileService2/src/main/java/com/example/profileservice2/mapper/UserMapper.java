@@ -12,9 +12,7 @@ import org.mapstruct.MappingTarget;
 public interface UserMapper {
     User toUser(UserRequest userRequest);
 
-    static UserReponse toUserReponse(User User) {
-        return null;
-    }
+    UserReponse toUserReponse(User user);
 
 
 }

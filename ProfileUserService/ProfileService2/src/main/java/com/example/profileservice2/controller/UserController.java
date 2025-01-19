@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,4 +43,8 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/getAllUserProfile")
+    public List<User> getAllUserProfile(){
+    	return userService.getAll();
+    }
 }

@@ -78,7 +78,7 @@ public class UserIdentityService {
 
 		JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder().subject("Duong").issueTime(new Date())
 				.expirationTime(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
-				.jwtID(UUID.randomUUID().toString()).claim("scope","id userProfileNhen" ).build();
+				.jwtID(UUID.randomUUID().toString()).claim("scope",userIdentity.getIdUserProfile() ).build();
 
 		Payload payload = new Payload(jwtClaimsSet.toJSONObject());
 
