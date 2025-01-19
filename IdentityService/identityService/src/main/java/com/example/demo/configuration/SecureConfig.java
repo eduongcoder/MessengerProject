@@ -25,7 +25,7 @@ public class SecureConfig {
 	private CustomJwtDecoder customJwtDecoder;
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, "/useridentity/createUserIdentity").permitAll()
+		http.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, "/useridentity/token").permitAll()
 				.anyRequest().authenticated());
 
 		http.oauth2ResourceServer(oauth2 ->

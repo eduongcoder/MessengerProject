@@ -30,9 +30,10 @@ public class UserIdentityController {
 	
 	
 	@PostMapping("/token")
-	public ApiRespone<LoginRespone> generateToken(@RequestBody LoginRequest request){
+	public LoginRespone generateToken(@RequestBody LoginRequest request){
 		
-		return ApiRespone.<LoginRespone>builder().result(userIdentityService.getUserIdentity(request)).build();
+//		return ApiRespone.<LoginRespone>builder().result().build();
+		return userIdentityService.getUserIdentity(request);
 	}
 	
 	@PostMapping("/createUserIdentity")
