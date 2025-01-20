@@ -34,7 +34,7 @@ public class Room {
     String receivedUser;
     String roomName;
     String backGroundRoom;
-
+    String idUser;
     LocalDateTime createAt;
     LocalDateTime updateAt;
 

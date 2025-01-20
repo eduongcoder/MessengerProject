@@ -41,8 +41,8 @@ public class RoomService {
         //khi người dùng đổi tên room thì sẽ lấy id của user nhận đổi t luôn
         return roomMapper.toRoomResponse(roomRepository.save(room));
     }
-    public List<RoomResponse> getallrooms(){
-        return roomRepository.findAll().stream()
+    public List<RoomResponse> getallrooms(String userid){
+        return roomRepository.findByUserMembers_UserId(userid).stream()
                 .map(roomMapper::toRoomResponse).collect(Collectors.toList());
     }
 }

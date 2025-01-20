@@ -1,6 +1,7 @@
 package com.example.chatservice.Dto.Response;
 
 
+import com.example.chatservice.Entity.UserMember;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Builder
@@ -23,11 +25,9 @@ public class RoomResponse {
         ID của người nhận trong các phòng chat 1-1 (chat cá nhân).
         Trong trường hợp phòng nhóm, trường này có thể để trống hoặc không được sử dụng.
     */
-    String receivedUser;
+    List<UserMember> userMembers;
     String roomName;
     String backGroundRoom;
     LocalDateTime createAt;
     LocalDateTime updateAt;
-
-
 }
