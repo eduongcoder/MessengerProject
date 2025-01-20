@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import FetchUser from "./fecthuser";
 const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +44,7 @@ const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
             required
           />
         </div>
-
+        <div className="mb-4"><FetchUser/></div>
         {/* Password Field */}
         <div className="mb-6">
           <label
