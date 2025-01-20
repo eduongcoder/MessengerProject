@@ -25,14 +25,14 @@ export const fetchUserProfile = (token) => async (dispatch) => {
   }
 };
 
-export const register = (credentials) => async (dispatch) => {
-  try {
-    const response = await loginApi(credentials);
-    const { token } = response.data.result;
+// export const register = (credentials) => async (dispatch) => {
+//   try {
+//     const response = await loginApi(credentials);
+//     const { token } = response.data.result;
 
-    localStorage.setItem("token", token); // Lưu token vào localStorage
-    dispatch({ type: REGISTER_SUCCESS, payload: token });
-  } catch (error) {
-    dispatch({ type: REGISTER_FAILURE, payload: error.message });
-  }
-};
+//     localStorage.setItem("token", token); // Lưu token vào localStorage
+//     dispatch({ type: REGISTER_SUCCESS, payload: token });
+//   } catch (error) {
+//     dispatch({ type: REGISTER_FAILURE, payload: error.message });
+//   }
+// };

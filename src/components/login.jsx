@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../api/auth/authActions';
 import { selectAuthUser , selectAuthLoading, selectAuthError } from '../api/auth';
 
-const Login = () => {
+const Login = ({ onSwitchPage}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -62,6 +62,17 @@ const Login = () => {
         >
           {loading ? 'Logging in...' : 'Log In'}
         </button>
+        <div className="mt-4 text-center">
+          <p className="text-gray-400">
+            Need an account?{" "}
+            <button
+              onClick={onSwitchPage}
+              className="text-blue-400 hover:underline"
+            >
+              Register
+            </button>
+          </p>
+        </div>
         {user && (
           <p className="text-green-500 mt-4 text-center">
             Login successful! Welcome {user.name}.
