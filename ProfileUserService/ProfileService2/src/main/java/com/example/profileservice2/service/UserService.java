@@ -7,6 +7,7 @@ import com.example.profileservice2.DTO.Response.UserIdentityRespone;
 import com.example.profileservice2.DTO.Response.UserReponse;
 import com.example.profileservice2.entity.User;
 import com.example.profileservice2.mapper.UserMapper;
+import com.example.profileservice2.openfeign.ChatServiceClient;
 import com.example.profileservice2.openfeign.IdentityServiceClient;
 import com.example.profileservice2.repository.UserRepository;
 import lombok.AccessLevel;
@@ -25,9 +26,10 @@ import java.util.UUID;
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
-	IdentityServiceClient authServiceClient;
-
+	IdentityServiceClient IdentityServiceClient;
+	ChatServiceClient chatServiceClient;
 	UserRepository userRepository; // Repository để thao tác với dữ liệu
+
 
 	UserMapper userMapper;
 	
@@ -61,7 +63,7 @@ public class UserService {
 		identityRequest.setPassword(savedUser.getPassword());
 
 		try {
-			ApiRespone<UserIdentityRespone> response = authServiceClient.createUserIdentity(identityRequest);
+			ApiRespone<UserIdentityRespone> response = IdentityServiceClient.createUserIdentity(identityRequest);
 			System.out.println("Identity Service Response: " + response.getResult().getEmail());
 		} catch (Exception e) {
 			System.err.println("Lỗi khi gọi Identity Service: " + e.getMessage());
@@ -74,7 +76,7 @@ public class UserService {
 
 	public UserReponse getUserProfile(String token) {
 
-		String userId = authServiceClient.decodeToken(token);
+		String userId = IdentityServiceClient.decodeToken(token);
 		User user = userRepository.findById((userId))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -82,7 +84,7 @@ public class UserService {
 
 //			User user=userRepository.findById(userId).get();
 		UserReponse userReponse = userMapper.toUserReponse(user);
-		userReponse.setRoom();
+		userReponse.setRoom(chatServiceClient.getAllRooms(userReponse.getId().toString()));
 		return userReponse;
 //		}
 	
