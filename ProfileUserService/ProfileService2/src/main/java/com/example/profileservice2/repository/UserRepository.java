@@ -12,4 +12,6 @@ public interface UserRepository extends Neo4jRepository<User, String> {
 
     // Kiểm tra email có tồn tại
     boolean existsByEmail(String email);
+    
+    boolean existsById(String id);
 }

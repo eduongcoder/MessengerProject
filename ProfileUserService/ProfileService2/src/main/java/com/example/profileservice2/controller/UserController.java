@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,7 +22,7 @@ public class UserController {
     UserService userService;
     public UserController(UserService userService) {
         this.userService = userService;
-    }
+    } 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRequest userDto) {
         try {
@@ -42,4 +43,8 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/getAllUserProfile")
+    public List<User> getAllUserProfile(){
+    	return userService.getAll();
+    }
 }
