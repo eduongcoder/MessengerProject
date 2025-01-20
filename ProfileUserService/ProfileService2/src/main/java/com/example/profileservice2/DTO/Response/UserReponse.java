@@ -3,6 +3,7 @@ package com.example.profileservice2.DTO.Response;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,5 +21,6 @@ public class UserReponse {
     private Boolean isactive;
     private Date createdAt;
     private Date updatedAt;
+    private List room;
 
 }

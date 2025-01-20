@@ -81,8 +81,9 @@ public class UserService {
 //		if (userRepository.existsById(userId)) {
 
 //			User user=userRepository.findById(userId).get();
-
-			return userMapper.toUserReponse(user);
+		UserReponse userReponse = userMapper.toUserReponse(user);
+		userReponse.setRoom();
+		return userReponse;
 //		}
 	
 	}
