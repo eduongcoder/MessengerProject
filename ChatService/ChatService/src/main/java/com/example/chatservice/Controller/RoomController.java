@@ -21,12 +21,12 @@ import java.util.List;
 @Slf4j
 public class RoomController {
     private final RoomService roomService;
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse<List<RoomResponse>> getAllRooms() {
+    @GetMapping(name = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<List<RoomResponse>> getAllRooms(@PathVariable String id) {
         // Get all rooms
         return ApiResponse.<List<RoomResponse>>builder()
                .code(0)
-               .result(roomService.getallrooms())
+               .result(roomService.getallrooms(id))
                .message("All rooms")
                .build();
     }
