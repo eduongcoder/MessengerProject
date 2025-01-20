@@ -11,5 +11,5 @@ public class ProfileService2Application {
     public static void main(String[] args) {
         SpringApplication.run(ProfileService2Application.class, args);
     }
-
+ 
 }

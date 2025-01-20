@@ -13,8 +13,6 @@ import com.example.demo.dto.request.UserIdentityCreationRequest;
 import com.example.demo.dto.respone.ApiRespone;
 import com.example.demo.dto.respone.LoginRespone;
 import com.example.demo.dto.respone.UserIdentityRespone;
-import com.example.demo.dto.respone.UserReponse;
-import com.example.demo.entity.UserIdentity;
 import com.example.demo.service.UserIdentityService;
 
 import lombok.AccessLevel;
@@ -39,13 +37,12 @@ public class UserIdentityController {
 	}
 
 	@PostMapping("/login")
-	public ApiRespone<UserReponse> login(@RequestBody LoginRequest request) {
+	public ApiRespone<LoginRespone> login(@RequestBody LoginRequest request) {
 
 //		return ApiRespone.<LoginRespone>builder().result().build();
-		LoginRespone loginRespone=userIdentityService.getUserIdentity(request);
-	
-		return ApiRespone.<UserReponse>builder()
-				.result(userIdentityService.login(loginRespone.getToken())).build();
+		LoginRespone loginRespone = userIdentityService.getUserIdentity(request);
+ 
+		return ApiRespone.<LoginRespone>builder().result(loginRespone).build();
 	}
 
 	@PostMapping("/createUserIdentity")
@@ -61,7 +58,7 @@ public class UserIdentityController {
 		String idUserProfile = userIdentityService.getScopeFromToken(token);
 		return idUserProfile;
 	}
-	
+
 	@GetMapping("/decodeToken")
 	public String decodeToken(@RequestParam String authorizationHeader) {
 //		String token = authorizationHeader.substring(7);
