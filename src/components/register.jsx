@@ -21,7 +21,7 @@ const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md p-8 bg-gray-800 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+      <div className="w-full max-w-md p-8 bg-blue-800 rounded-lg shadow-lg transform transition-transform hover:scale-105">
         <h2 className="text-3xl font-bold text-white mb-4 text-center">
           Create Account
         </h2>
