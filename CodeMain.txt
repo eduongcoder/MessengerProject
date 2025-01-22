@@ -1,0 +1,23 @@
+import { ModeToggle } from '@/components/mode-toggle';
+import * as React from 'react';
+
+export default function Home() {
+  return (
+    <div>
+      <ModeToggle/>
+    </div>
+  );
+}
+
+
+{/* <DialogContentText>
+                    <IconButton onClick={closepopup} style={{ float: 'right', alignItems: 'center' }}><CloseIcon color="primary"></CloseIcon></IconButton>
+                </DialogContentText> */}
+                {/* <Stack spacing={2} margin={2} >
+                        <TextField size="small" variant="outlined" label="Enter server name" />
+                        <Button variant="contained"
+                            className='bg-indigo-600'
+                        >
+                            Submit
+                        </Button>
+                    </Stack> */}
