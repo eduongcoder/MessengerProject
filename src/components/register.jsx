@@ -1,22 +1,28 @@
 import React, { useState } from "react";
-import FetchUser from "./fecthuser";
-const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../api/regi";
+import { selectRegiError , selectRegiLoading } from "../api/regi";
+
+const RegisterPage = ({ onSwitchPage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const dispatch = useDispatch();
+  const loading = useSelector(selectRegiLoading);
+  const error = useSelector(selectRegiError);
 
-  const handleSendOTP = () => {
-    if (!email.trim()) {
-      setError("Email is required.");
+  const handleRegister = () => {
+    if (!email.trim() || !username.trim()) {
+      alert("Username and Email are required.");
       return;
     }
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      alert("Passwords do not match.");
       return;
     }
-    setError("");
-    onSendOPT(); // Gọi callback để chuyển sang giao diện OTP
+    const userData = { username, email, password };
+    dispatch(registerUser(userData));
   };
 
   return (
@@ -26,16 +32,27 @@ const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
           Create Account
         </h2>
 
+        {/* Username Field */}
+        <div className="mb-4">
+          <label className="block text-white text-sm font-bold mb-1">
+            Username *
+          </label>
+          <input
+            type="text"
+            placeholder="Enter your username"
+            className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+
         {/* Email Field */}
         <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-white text-sm font-bold mb-1"
-          >
+          <label className="block text-white text-sm font-bold mb-1">
             Email *
           </label>
           <input
-            id="email"
             type="email"
             placeholder="Enter your email"
             className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -44,17 +61,13 @@ const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
             required
           />
         </div>
-        <div className="mb-4"><FetchUser/></div>
+
         {/* Password Field */}
         <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block text-white text-sm font-bold mb-1"
-          >
+          <label className="block text-white text-sm font-bold mb-1">
             New Password *
           </label>
           <input
-            id="password"
             type="password"
             placeholder="Enter your password"
             className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -66,14 +79,10 @@ const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
 
         {/* Confirm Password Field */}
         <div className="mb-6">
-          <label
-            htmlFor="confirm-password"
-            className="block text-white text-sm font-bold mb-1"
-          >
+          <label className="block text-white text-sm font-bold mb-1">
             Confirm New Password *
           </label>
           <input
-            id="confirm-password"
             type="password"
             placeholder="Confirm your password"
             className="w-full p-3 bg-gray-700 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -84,19 +93,21 @@ const RegisterPage = ({ onSwitchPage, onSendOPT }) => {
         </div>
 
         {/* Error Message */}
-        {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
+        )}
 
         {/* Register Button */}
         <button
-          onClick={handleSendOTP}
-          disabled={!email || !password || password !== confirmPassword}
+          onClick={handleRegister}
+          disabled={loading}
           className={`w-full text-white font-bold py-3 rounded ${
-            !email || !password || password !== confirmPassword
+            loading
               ? "bg-gray-500 cursor-not-allowed"
               : "bg-blue-500 hover:bg-blue-600"
           }`}
         >
-          Send OTP
+          {loading ? "Registering..." : "Register"}
         </button>
 
         {/* Switch to Login */}

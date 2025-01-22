@@ -18,7 +18,6 @@ const LoginAndRegister = () => {
       {currentPage === "register" && (
         <RegisterPage
           onSwitchPage={() => setCurrentPage("login")}
-          onSendOPT={() => setCurrentPage("sendOPT")}
         />
       )}
       {currentPage === "forgotPassword" && (
