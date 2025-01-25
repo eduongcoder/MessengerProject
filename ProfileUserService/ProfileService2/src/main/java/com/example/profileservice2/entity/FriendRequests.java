@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,7 +18,6 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE )
 public class FriendRequests {
     @Id
-    @GeneratedValue(generatorClass = GeneratedValue.UUIDGenerator.class)
     String request_id;
     String sender_user;
     String receiver_user;
@@ -31,7 +31,7 @@ public class FriendRequests {
     }
 
     public FriendRequests(String request_id, String sender_user, String receiver_user, String status, String send_user, String user_receive, Date createdAt, Date updatedAt) {
-        this.request_id = request_id;
+        this.request_id = UUID.randomUUID().toString(); // Tạo UUID dạng String khi tạo object
         this.sender_user = sender_user;
         this.receiver_user = receiver_user;
         this.status = status;

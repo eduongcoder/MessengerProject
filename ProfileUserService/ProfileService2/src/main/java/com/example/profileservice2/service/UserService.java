@@ -64,7 +64,6 @@ public class UserService {
 
 		try {
 			ApiRespone<UserIdentityRespone> response = IdentityServiceClient.createUserIdentity(identityRequest);
-			System.out.println("Identity Service Response: " + response.getResult().getEmail());
 		} catch (Exception e) {
 			System.err.println("Lỗi khi gọi Identity Service: " + e.getMessage());
 			return null;

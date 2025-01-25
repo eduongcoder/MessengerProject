@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 
 public interface FriendsRepository extends Neo4jRepository<Friends, String> {
-    List<Friends> findByUserId(String userId);
 
 }

@@ -1,10 +1,15 @@
 package com.example.profileservice2.controller;
 
+import com.example.profileservice2.DTO.Request.FriendRequestDto;
+import com.example.profileservice2.DTO.Request.RequestActionDto;
+import com.example.profileservice2.DTO.Response.ApiRespone;
 import com.example.profileservice2.service.FriendRequestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/friend-requests")
@@ -13,18 +18,22 @@ public class FriendRequestController {
 
     private final FriendRequestService friendRequestService;
 
+    @Autowired
+    public FriendRequestController(FriendRequestService friendRequestService) {
+        this.friendRequestService = friendRequestService;
+    }
     @PostMapping("/send")
-    public ResponseEntity<ApiResponse> sendFriendRequest(@RequestBody FriendRequestDto requestDto) {
+    public ResponseEntity<ApiRespone> sendFriendRequest(@RequestBody FriendRequestDto requestDto) {
         return ResponseEntity.ok(friendRequestService.sendFriendRequest(requestDto));
     }
 
     @PostMapping("/accept")
-    public ResponseEntity<ApiResponse> acceptFriendRequest(@RequestBody RequestActionDto actionDto) {
+    public ResponseEntity<ApiRespone> acceptFriendRequest(@RequestBody RequestActionDto actionDto) {
         return ResponseEntity.ok(friendRequestService.acceptFriendRequest(actionDto.getRequestId()));
     }
 
     @PostMapping("/decline")
-    public ResponseEntity<ApiResponse> declineFriendRequest(@RequestBody RequestActionDto actionDto) {
+    public ResponseEntity<ApiRespone> declineFriendRequest(@RequestBody RequestActionDto actionDto) {
         return ResponseEntity.ok(friendRequestService.declineFriendRequest(actionDto.getRequestId()));
     }
 

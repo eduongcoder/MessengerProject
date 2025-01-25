@@ -7,6 +7,7 @@ import com.example.profileservice2.entity.User;
 import com.example.profileservice2.repository.FriendRequestsRepository;
 import com.example.profileservice2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,16 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class FriendRequestService {
 
     private final FriendRequestsRepository friendRequestRepository;
     private final UserRepository userRepository;
-
+    @Autowired
+    public FriendRequestService(FriendRequestsRepository friendRequestRepository, UserRepository userRepository) {
+        this.friendRequestRepository = friendRequestRepository;
+        this.userRepository = userRepository;
+    }
     public ApiRespone sendFriendRequest(FriendRequestDto requestDto) {
         // Check if users exist
         User sender = userRepository.findById(requestDto.getSenderUser())
