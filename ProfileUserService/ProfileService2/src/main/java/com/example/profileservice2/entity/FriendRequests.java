@@ -19,8 +19,9 @@ import java.util.UUID;
 public class FriendRequests {
     @Id
     String request_id;
-    String sender_user;
-    String receiver_user;
+    private String senderUser;
+    private String receiverUser;
+
     String status;
     String send_user; //fk
     String user_receive; //fk
@@ -28,12 +29,15 @@ public class FriendRequests {
     Date updatedAt;
 
     public FriendRequests() {
+    	 this.request_id = UUID.randomUUID().toString();
+         this.createdAt = new Date();
+         this.updatedAt = new Date();
     }
 
     public FriendRequests(String request_id, String sender_user, String receiver_user, String status, String send_user, String user_receive, Date createdAt, Date updatedAt) {
         this.request_id = UUID.randomUUID().toString(); // Tạo UUID dạng String khi tạo object
-        this.sender_user = sender_user;
-        this.receiver_user = receiver_user;
+        this.senderUser = sender_user;
+        this.receiverUser = receiver_user;
         this.status = status;
         this.send_user = send_user;
         this.user_receive = user_receive;
@@ -50,19 +54,19 @@ public class FriendRequests {
     }
 
     public String getSender_user() {
-        return sender_user;
+        return senderUser;
     }
 
     public void setSender_user(String sender_user) {
-        this.sender_user = sender_user;
+        this.senderUser = sender_user;
     }
 
     public String getReceiver_user() {
-        return receiver_user;
+        return receiverUser;
     }
 
     public void setReceiver_user(String receiver_user) {
-        this.receiver_user = receiver_user;
+        this.receiverUser = receiver_user;
     }
 
     public String getStatus() {

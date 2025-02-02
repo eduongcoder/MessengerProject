@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FriendRequestsRepository extends Neo4jRepository<FriendRequests,String> {
-    List<FriendRequests> findBySenderUser(String senderUser);
+public interface FriendRequestsRepository extends Neo4jRepository<FriendRequests, String> {
     List<FriendRequests> findByReceiverUser(String receiverUser);
+    List<FriendRequests> findBySenderUser(String senderUser);
 }

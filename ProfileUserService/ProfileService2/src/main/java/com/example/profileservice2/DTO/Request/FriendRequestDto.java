@@ -13,7 +13,7 @@ import java.util.Date;
 //@AllArgsConstructor
 //@NoArgsConstructor
 public class FriendRequestDto {
-    private String requestId;       // Unique ID for the friend request
+    private String request_id;       // Unique ID for the friend request
     private String senderUser;      // ID of the user sending the request
     private String receiverUser;    // ID of the user receiving the request
     private String status;          // Status of the request (e.g., PENDING, FRIENDS, DECLINED)
@@ -24,7 +24,7 @@ public class FriendRequestDto {
     }
 
     public FriendRequestDto(String requestId, String senderUser, String receiverUser, String status, Date createdAt, Date updatedAt) {
-        this.requestId = requestId;
+        this.request_id = requestId;
         this.senderUser = senderUser;
         this.receiverUser = receiverUser;
         this.status = status;
@@ -35,11 +35,11 @@ public class FriendRequestDto {
 
 
     public String getRequestId() {
-        return requestId;
+        return request_id;
     }
 
     public void setRequestId(String requestId) {
-        this.requestId = requestId;
+        this.request_id = requestId;
     }
 
     public String getSenderUser() {

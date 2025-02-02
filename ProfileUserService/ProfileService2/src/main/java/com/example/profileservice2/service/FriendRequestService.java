@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 //@RequiredArgsConstructor
@@ -74,7 +75,6 @@ public class FriendRequestService {
         // Convert to DTOs
         List<FriendRequestDto> requests = new ArrayList<>();
         receivedRequests.forEach(request -> requests.add(new FriendRequestDto(request.getRequest_id(),request.getSender_user(), request.getReceiver_user(), request.getStatus(),request.getCreatedAt(),request.getUpdatedAt())));
-        sentRequests.forEach(request -> requests.add(new FriendRequestDto(request.getRequest_id(),request.getSender_user(), request.getReceiver_user(), request.getStatus(),request.getCreatedAt(),request.getUpdatedAt())));
 
         return requests;
     }
