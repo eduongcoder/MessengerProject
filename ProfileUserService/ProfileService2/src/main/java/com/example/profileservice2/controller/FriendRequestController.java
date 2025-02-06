@@ -41,5 +41,9 @@ public class FriendRequestController {
     public ResponseEntity<List<FriendRequestDto>> getFriendRequests(@PathVariable String userId) {
         return ResponseEntity.ok(friendRequestService.getFriendRequests(userId));
     }
+    @DeleteMapping("/{requestId}")
+    public ResponseEntity<ApiRespone> deleteFriendRequest(@PathVariable String requestId) {
+        return ResponseEntity.ok(friendRequestService.deleteFriendRequest(requestId));
+    }
 }
 

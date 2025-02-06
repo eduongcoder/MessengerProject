@@ -78,5 +78,17 @@ public class FriendRequestService {
 
         return requests;
     }
+    public ApiRespone deleteFriendRequest(String requestId) {
+            try {
+                FriendRequests request = friendRequestRepository.findById(requestId)
+                        .orElseThrow(() -> new RuntimeException("Request not found"));
+
+                friendRequestRepository.delete(request);
+
+                return new ApiRespone("Friend request deleted successfully", "DELETED");
+            } catch (RuntimeException e) {
+                return new ApiRespone(e.getMessage(), "ERROR");
+            }
+    }
 }
 

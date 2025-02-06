@@ -11,4 +11,5 @@ import java.util.List;
 public interface FriendRequestsRepository extends Neo4jRepository<FriendRequests, String> {
     List<FriendRequests> findByReceiverUser(String receiverUser);
     List<FriendRequests> findBySenderUser(String senderUser);
+
 }
